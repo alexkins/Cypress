@@ -1,5 +1,13 @@
+import Login from '../PageObject/test_4_Login.cy'
+import test_4_Login from '../PageObject/test_4_Login.cy'
+
+const email = 'qwerty12345@gmail.com'
+const password = 'qwerty12345'
+
 describe('Assert', ()=> {
-    
+
+    const login = new Login()
+
     it('Assert Web Test', ()=>{
         cy.visit("https://unsplash.com")  //go to web site
 
@@ -9,20 +17,21 @@ describe('Assert', ()=> {
 
         cy.title().should('eq', 'Beautiful Free Images & Pictures | Unsplash') // checked name <title>
 
-        cy.get('a[class="cLLOA p1cWU jpBZ0 EzsBC KHq0c XHI2L"]')
+        login.btnLogin()
         .should('be.visible')  //checked visible name button "Log in"
 
         cy.contains("Log in").click()  //press button "Log in" and go to authorization
 
-        cy.get('input[id="user_email"]')
-        .type('qwerty12345@gmail.com')
+        login.email()
+        .type(`${email}`)
         .should('have.value', 'qwerty12345@gmail.com')  //email input validation actual result and expected result
 
-        cy.get('input[id="user_password"]')
-        .type('qwerty12345')
+        login.password()
+        .type(`${password}`)
         .should('have.value', 'qwerty12345')  //password input validation actual result and expected result
 
-        cy.get('input[type="submit"]').should('be.visible')  //click button "login"
+        login.clickBtnLogin()
+        .should('be.visible')  //click button "login"
         .click()
 
         cy.contains('Invalid email or password.').should('be.visible')  //checked errors
